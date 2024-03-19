@@ -8,6 +8,7 @@ import {
   Send,
   Target,
 } from "lucide-react"
+import { motion } from "framer-motion"
 
 import "leaflet/dist/leaflet.css"
 import dynamic from "next/dynamic"
@@ -32,6 +33,38 @@ const Marker = dynamic(
 const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
   ssr: false,
 })
+
+const TypewriterText = ({ text }) => {
+  const textArray = text.split("")
+  const container = {
+    visible: {
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  }
+
+  const child = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  }
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }} // Add this to ensure animation runs once per page load
+      variants={container}
+      className="text-white text-center text-[57px] leading-[60px]"
+    >
+      {textArray.map((char, index) => (
+        <motion.span key={index} variants={child}>
+          {char}
+        </motion.span>
+      ))}
+    </motion.div>
+  )
+}
 
 const Contact = () => {
   const router = useRouter()
@@ -216,9 +249,7 @@ const Contact = () => {
         <div className="w-full z-10 max-w-7xl mx-auto">
           <div className="flex md:flex-row flex-col w-full md:items-center items-center gap-10 justify-center">
             <div className=" flex flex-col justify-center items-center">
-              <h1 className="text-white text-center text-[37px] leading-[60px] ">
-                Global Escrow Payment Solution for mergers & acquisitions.
-              </h1>
+              <TypewriterText text="Elevating Trust, Simplifying Transactions" />
 
               <button
                 onClick={() => router.push("/about-us")}

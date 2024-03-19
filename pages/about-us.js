@@ -1,6 +1,39 @@
 import { ArrowDown, BarChart2, Check, ChevronDown, Target } from "lucide-react"
 import { useRouter } from "next/router"
 import React, { useState } from "react"
+import { motion } from "framer-motion"
+
+const TypewriterText = ({ text }) => {
+  const textArray = text.split("")
+  const container = {
+    visible: {
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  }
+
+  const child = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  }
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }} // Add this to ensure animation runs once per page load
+      variants={container}
+      className="text-white text-center text-[57px] leading-[60px]"
+    >
+      {textArray.map((char, index) => (
+        <motion.span key={index} variants={child}>
+          {char}
+        </motion.span>
+      ))}
+    </motion.div>
+  )
+}
 
 const About = () => {
   const router = useRouter()
@@ -87,24 +120,43 @@ const About = () => {
             </ul>
           </header>
           <div className="py-44  max-w-4xl px-5 md:px-0 flex flex-col  items-center justify-center ">
-            <h1 className="text-white text-center  md:text-[72px] text-[50px] sm:text-[40px] md:leading-[85px] sm:leading-[65px] leading-[50px] font-semibold">
+            <motion.h1
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              className="text-white text-center  md:text-[72px] text-[50px] sm:text-[40px] md:leading-[85px] sm:leading-[65px] leading-[50px] font-semibold"
+            >
               Experience the Future of Escrow with Libero
-            </h1>
-            <ChevronDown
-              onClick={() => {
-                window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
-              }}
-              className="text-white cursor-pointer w-10 h-10 mt-10"
-            />
+            </motion.h1>
+            <motion.span
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <ChevronDown
+                onClick={() => {
+                  window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: "smooth",
+                  })
+                }}
+                className="text-white cursor-pointer w-10 h-10 mt-10"
+              />
+            </motion.span>
           </div>
         </div>
       </div>
       <div className="pt-14 pb-28 md:px-10 px-5 bg-white text-black w-full flex flex-col ">
         <div className="w-full max-w-7xl mx-auto">
           <div className="flex  lg:flex-row flex-col w-full md:items-start items-start gap-10 justify-between">
-            <div className="lg:max-w-[500px]">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0 }}
+              className="lg:max-w-[500px]"
+            >
               <img src="/images/person1.jpeg" alt="" />
-            </div>
+            </motion.div>
             <div className="lg:w-1/2">
               <h2 className=" text-[14px] leading-[50px] font-bold">
                 INDUSTRY LEADING
@@ -120,13 +172,18 @@ const About = () => {
               </p>
             </div>
           </div>
-          <div className="lg:-mt-[300px] mt-10 w-full flex justify-end ">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="lg:-mt-[300px] mt-10 w-full flex justify-end "
+          >
             <img
               src="/images/person2.jpeg"
               alt=""
               className="lg:max-w-[650px]  w-full"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
       <div className="pt-14 pb-28 md:px-10 px-5 bg-[#0f0658] w-full flex flex-col ">
@@ -136,10 +193,8 @@ const About = () => {
               <h2 className="text-white text-[14px] leading-[50px] font-bold">
                 WHAT WE DO
               </h2>
-              <h1 className="text-white text-center text-[57px] leading-[60px] ">
-                Digital escrow at your fingertips <br /> for a wide-range of use
-                cases
-              </h1>
+              <TypewriterText text="Digital escrow at your fingertips for a wide-range of use cases" />
+
               <p className="text-white/70 text-center text-[17px] mt-10">
                 We work hand-in-hand with Businesses to ensure that receiving
                 payments and making payments is a transparent and accountable

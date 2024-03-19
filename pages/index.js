@@ -2,6 +2,7 @@ import { ArrowBigDown, ArrowDown, ArrowRight, Check } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState } from "react"
+import { motion } from "framer-motion"
 
 export default function Home() {
   const router = useRouter()
@@ -9,13 +10,20 @@ export default function Home() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
+  const menuVariants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "-100%" },
+  }
+
   return (
     <div className="flex h-full w-full overflow-x-hidden flex-col items-center  justify-between ">
       {/* Overlay menu */}
-      <div
-        className={`fixed inset-0 z-50 bg-black bg-opacity-80 flex flex-col items-center justify-center transition-opacity duration-500 ease-in-out ${
-          isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+      <motion.div
+        initial="closed"
+        animate={isMenuOpen ? "open" : "closed"}
+        variants={menuVariants}
+        transition={{ duration: 0.5 }}
+        className={`fixed inset-0 z-50 bg-black bg-opacity-80 flex flex-col items-center justify-center`}
       >
         <button
           onClick={toggleMenu}
@@ -42,7 +50,7 @@ export default function Home() {
             </li>
           </ul>
         </nav>
-      </div>
+      </motion.div>
 
       <div
         className={`flex min-h-screen w-full  bg-[url('/images/bg.jpeg')]  bg-cover  bg-center flex-col items-center  justify-between py-10 `}
@@ -90,29 +98,42 @@ export default function Home() {
             </ul>
           </header>
 
-          <div className="py-32 max-w-4xl px-5 md:px-0 flex flex-col ">
-            <h1 className="text-white md:text-[92px] text-[40px] sm:text-[60px] md:leading-[85px] sm:leading-[65px] leading-[50px] font-bold">
+          <motion.div className="py-32 max-w-4xl px-5 md:px-0 flex flex-col ">
+            <motion.h1
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="text-white md:text-[92px] text-[40px] sm:text-[60px] md:leading-[85px] sm:leading-[65px] leading-[50px] font-bold"
+            >
               Pioneering Escrow <br /> Innovation for a <br /> Connected World
-            </h1>
-            <div className="flex items-center  gap-8 justify-start md:w-full w-1/6">
-              <ArrowDown
-                onClick={() => {
-                  window.scrollTo({
-                    top: window.innerHeight,
-                    behavior: "smooth",
-                  })
-                }}
-                size={182}
-                color="white"
-              />
+            </motion.h1>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              className="flex items-center  gap-8 justify-start md:w-full w-1/6"
+            >
+              <motion.div>
+                <ArrowDown
+                  onClick={() => {
+                    window.scrollTo({
+                      top: window.innerHeight,
+                      behavior: "smooth",
+                    })
+                  }}
+                  size={132}
+                  color="white"
+                />
+              </motion.div>
+
               <span className="text-white text-lg md:flex hidden  font-extralight">
                 We believe that secure transactions should be at the heart of
                 every online interaction. That’s why we’ve set out to
                 revolutionize the escrow industry by merging the time-honored
                 principles of traditional escrow services
               </span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
       <div className="pt-14 pb-28 md:px-10 px-5 bg-[#0f0658] w-full flex flex-col ">
@@ -141,32 +162,103 @@ export default function Home() {
 
           <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8 pt-20 justify-between items-center w-full">
             <div className="flex md:border-r border-white/40 flex-col gap-4">
-              <img src="/images/4.png" alt="" className="max-w-[90px] mb-5" />
-              <h3 className="text-white text-[22px] leading-[30px] ">
-                Secure <br /> Business Negotiations
-              </h3>
-              <ArrowRight size={32} color="white" />
+              <motion.div
+                initial={false}
+                whileHover={{ x: 10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="flex flex-col gap-4 cursor-pointer"
+              >
+                <img src="/images/4.png" alt="" className="max-w-[90px] mb-5" />
+                <h3 className="text-white text-[22px] leading-[30px] ">
+                  Secure <br /> Business Negotiations
+                </h3>
+                <div className="flex items-center">
+                  <ArrowRight size={32} color="white" />
+                  <motion.span
+                    className="text-white text-lg font-extralight ml-2"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Read more
+                  </motion.span>
+                </div>
+              </motion.div>
             </div>
+
             <div className="flex flex-col md:border-r border-white/40 gap-4">
-              <img src="/images/3.png" alt="" className="max-w-[90px] mb-5" />
-              <h3 className="text-white text-[22px] leading-[30px] ">
-                Protected <br /> Mergers & Acquisitions
-              </h3>
-              <ArrowRight size={32} color="white" />
+              <motion.div
+                initial={false}
+                whileHover={{ x: 10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="flex flex-col gap-4 cursor-pointer"
+              >
+                <img src="/images/3.png" alt="" className="max-w-[90px] mb-5" />
+                <h3 className="text-white text-[22px] leading-[30px]">
+                  Protected <br /> Mergers & Acquisitions
+                </h3>
+                <div className="flex items-center">
+                  <ArrowRight size={32} color="white" />
+                  <motion.span
+                    className="text-white text-lg font-extralight ml-2"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Read more
+                  </motion.span>
+                </div>
+              </motion.div>
             </div>
-            <div className="flex md:border-r border-white/40 flex-col gap-4">
-              <img src="/images/2.png" alt="" className="max-w-[90px] mb-5" />
-              <h3 className="text-white text-[22px] leading-[30px] ">
-                Safeguarded <br /> Real Estate Transactions
-              </h3>
-              <ArrowRight size={32} color="white" />
+
+            <div className="flex flex-col md:border-r border-white/40 gap-4">
+              <motion.div
+                initial={false}
+                whileHover={{ x: 10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="flex flex-col gap-4 cursor-pointer"
+              >
+                <img src="/images/2.png" alt="" className="max-w-[90px] mb-5" />
+                <h3 className="text-white text-[22px] leading-[30px]">
+                  Safeguarded <br /> Real Estate Transactions
+                </h3>
+                <div className="flex items-center">
+                  <ArrowRight size={32} color="white" />
+                  <motion.span
+                    className="text-white text-lg font-extralight ml-2"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Read more
+                  </motion.span>
+                </div>
+              </motion.div>
             </div>
+
             <div className="flex flex-col gap-4">
-              <img src="/images/1.png" alt="" className="max-w-[90px] mb-5" />
-              <h3 className="text-white text-[22px] leading-[30px] ">
-                Smart <br /> Money Transfers
-              </h3>
-              <ArrowRight size={32} color="white" />
+              <motion.div
+                initial={false}
+                whileHover={{ x: 10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="flex flex-col gap-4 cursor-pointer"
+              >
+                <img src="/images/1.png" alt="" className="max-w-[90px] mb-5" />
+                <h3 className="text-white text-[22px] leading-[30px]">
+                  Smart <br /> Money Transfers
+                </h3>
+                <div className="flex items-center">
+                  <ArrowRight size={32} color="white" />
+                  <motion.span
+                    className="text-white text-lg font-extralight ml-2"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Read more
+                  </motion.span>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -174,9 +266,14 @@ export default function Home() {
       <div className="pt-14 pb-28 md:px-10 px-5 bg-white text-black w-full flex flex-col ">
         <div className="w-full max-w-7xl mx-auto">
           <div className="flex  lg:flex-row flex-col w-full md:items-start items-start gap-10 justify-between">
-            <div className="lg:max-w-[500px]">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0 }}
+              className="lg:max-w-[500px]"
+            >
               <img src="/images/person1.jpeg" alt="" />
-            </div>
+            </motion.div>
             <div className="lg:w-1/2">
               <h2 className=" text-[14px] leading-[50px] font-bold">
                 INDUSTRY LEADING
@@ -192,13 +289,18 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="lg:-mt-[300px] mt-10 w-full flex justify-end ">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="lg:-mt-[300px] mt-10 w-full flex justify-end "
+          >
             <img
               src="/images/person2.jpeg"
               alt=""
               className="lg:max-w-[650px]  w-full"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
       <div className="pt-14 pb-28 md:px-10 px-5 bg-[#0f0658] w-full flex flex-col ">
@@ -222,14 +324,16 @@ export default function Home() {
                 We are here to address any concerns you may have and ensure a
                 smooth and secure transaction from start to finish.
               </p>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   router.push("/about-us")
                 }}
                 className="bg-[#fa4729] text-[17px] text-white px-8 py-4 mt-10"
               >
                 About Libero
-              </button>
+              </motion.button>
             </div>
             <div className="md:w-1/2">
               <img src="/images/finance.png" alt="" />
@@ -254,9 +358,14 @@ export default function Home() {
         </div>
         <div className="w-full max-w-7xl mx-auto mt-32">
           <div className="flex  lg:flex-row flex-col w-full md:items-center items-start gap-10 justify-between">
-            <div className="lg:max-w-[500px]">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0 }}
+              className="lg:max-w-[500px]"
+            >
               <img src="/images/person3.jpeg" alt="" />
-            </div>
+            </motion.div>
             <div className="lg:w-1/2">
               <h2 className=" text-[14px] leading-[50px] font-bold">
                 WHAT WE OFFER
