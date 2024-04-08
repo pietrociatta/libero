@@ -73,6 +73,55 @@ const Contact = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  const [name, setName] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [email, setEmail] = useState("")
+  const [company, setCompany] = useState("")
+  const [message, setMessage] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setIsLoading(true)
+
+    const formData = {
+      name,
+      phone_number: phoneNumber,
+      email,
+      company: company,
+      message,
+    }
+
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        // If the server response is not ok, handle errors.
+        const errorData = await response.json() // Assuming error details are in the response body.
+        throw new Error(
+          errorData.message || "An error occurred while submitting the form."
+        ) // Create a new error with the server's message or a default one.
+      }
+
+      const data = await response.json() // If response is ok, process it.
+
+      setSuccess(true)
+    } catch (error) {
+      console.error("Failed to submit form:", error)
+      alert(`Error submitting form: ${error.message}`) // Display the error message from the catch block.
+      setSuccess(false)
+    } finally {
+      setIsLoading(false) // Ensure loading state is reset regardless of the outcome.
+    }
+  }
+
   const position = [35.8989, 14.5146]
   return (
     <div className="flex h-full w-full overflow-x-hidden flex-col items-center  justify-between ">
@@ -198,46 +247,56 @@ const Contact = () => {
               </p>
             </div>
             <div className="md:w-1/2">
-              <form action="" className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <div className="grid grid-cols-2 gap-5 mt-10">
                   <input
                     type="text"
-                    name=""
-                    id=""
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Full Name"
                     className="p-4 border border-black/30 w-full"
                   />
                   <input
                     type="text"
-                    name=""
-                    id=""
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email Address"
                     className="p-4 border border-black/30 w-full"
                   />
                   <input
                     type="text"
-                    name=""
-                    id=""
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     placeholder="Phone Number"
                     className="p-4 border border-black/30 w-full"
                   />
                   <input
                     type="text"
-                    name=""
-                    id=""
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
                     placeholder="Company Name"
                     className="p-4 border border-black/30 w-full"
                   />
                   <textarea
-                    name=""
-                    id=""
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     placeholder="Message"
                     className="p-4 border col-span-2 border-black/30 w-full"
                   ></textarea>
-                  <button className="bg-[#fa4729] text-white flex items-center  justify-center gap-3 w-full p-4">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="bg-[#fa4729] text-white flex items-center  justify-center gap-3 w-full p-4"
+                  >
                     <Send className="w-5 h-5" />
-                    Get in touch
+                    {isLoading ? "Sending..." : "Send Message"}
                   </button>
+                  {success && (
+                    <div className="col-span-2 flex items-center gap-2 text-green-500">
+                      <Check className="w-5 h-5" />
+                      <span>Message sent successfully!</span>
+                    </div>
+                  )}
                 </div>
               </form>
             </div>
