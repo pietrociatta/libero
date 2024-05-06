@@ -12,7 +12,7 @@ export default function Home() {
   }
   const menuVariants = {
     open: { opacity: 1, x: 0 },
-    closed: { opacity: 0, x: "-100%" },
+    closed: { opacity: 0, x: "-100%" }
   }
 
   return (
@@ -118,7 +118,7 @@ export default function Home() {
                   onClick={() => {
                     window.scrollTo({
                       top: window.innerHeight,
-                      behavior: "smooth",
+                      behavior: "smooth"
                     })
                   }}
                   size={132}
@@ -429,8 +429,7 @@ export default function Home() {
                 Contact Libero
               </h3>
               <p className="text-white/70 underline-offset-4 underline text-[17px] mt-5">
-                enquiries@libero-partners.com <br />
-                publicrelations@libero-partners.com <br />
+                enquiries@libero-corporate.com <br />
               </p>
             </div>
             <div>

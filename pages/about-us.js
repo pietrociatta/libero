@@ -8,14 +8,14 @@ const TypewriterText = ({ text }) => {
   const container = {
     visible: {
       transition: {
-        staggerChildren: 0.05,
-      },
-    },
+        staggerChildren: 0.05
+      }
+    }
   }
 
   const child = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1 },
+    visible: { opacity: 1 }
   }
 
   return (
@@ -137,7 +137,7 @@ const About = () => {
                 onClick={() => {
                   window.scrollTo({
                     top: window.innerHeight,
-                    behavior: "smooth",
+                    behavior: "smooth"
                   })
                 }}
                 className="text-white cursor-pointer w-10 h-10 mt-10"
@@ -275,8 +275,7 @@ const About = () => {
                 Contact Libero
               </h3>
               <p className="text-white/70 underline-offset-4 underline text-[17px] mt-5">
-                enquiries@libero-partners.com <br />
-                publicrelations@libero-partners.com <br />
+                enquiries@libero-corporate.com <br />
               </p>
             </div>
             <div>

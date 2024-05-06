@@ -6,7 +6,7 @@ import {
   Check,
   ChevronDown,
   Send,
-  Target,
+  Target
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -15,23 +15,23 @@ import dynamic from "next/dynamic"
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   {
-    ssr: false,
+    ssr: false
   }
 )
 const TileLayer = dynamic(
   () => import("react-leaflet").then((mod) => mod.TileLayer),
   {
-    ssr: false,
+    ssr: false
   }
 )
 const Marker = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
   {
-    ssr: false,
+    ssr: false
   }
 )
 const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
-  ssr: false,
+  ssr: false
 })
 
 const TypewriterText = ({ text }) => {
@@ -39,14 +39,14 @@ const TypewriterText = ({ text }) => {
   const container = {
     visible: {
       transition: {
-        staggerChildren: 0.05,
-      },
-    },
+        staggerChildren: 0.05
+      }
+    }
   }
 
   const child = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1 },
+    visible: { opacity: 1 }
   }
 
   return (
@@ -90,16 +90,16 @@ const Contact = () => {
       phone_number: phoneNumber,
       email,
       company: company,
-      message,
+      message
     }
 
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       })
 
       if (!response.ok) {
@@ -350,8 +350,7 @@ const Contact = () => {
                 Contact Libero
               </h3>
               <p className="text-white/70 underline-offset-4 underline text-[17px] mt-5">
-                enquiries@libero-partners.com <br />
-                publicrelations@libero-partners.com <br />
+                enquiries@libero-corporate.com <br />
               </p>
             </div>
             <div>
